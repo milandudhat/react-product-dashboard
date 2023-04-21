@@ -14,6 +14,9 @@ import Container from '@mui/material/Container';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 import '../Dash.css'
 
 
@@ -23,32 +26,6 @@ import { Textarea } from '@mui/joy';
 
 
 const AddProduct = () => {
-    const Editor = () => {
-        const [editorState, setEditorState] = React.useState(
-            MUIEditorState.createEmpty({
-                editorState: {
-                    decorator: {
-                        strategy: () => { },
-                        component: () => { },
-                    },
-                },
-
-            }),
-        )
-        const onChange = newState => {
-            setEditorState(newState)
-        }
-        return <MUIEditor sx={{
-            minwidth: '100%',
-            minheight: '100%',
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-            padding: '5px',
-            fontSize: '16px',
-        }} placeholder="Frequently Asked Questions (FAQs)" editorState={editorState} onChange={onChange} />
-    }
-
-
     const formik = useFormik({
         initialValues: {
             productname: '',
@@ -101,6 +78,7 @@ const AddProduct = () => {
         }),
         onSubmit: values => {
             alert(JSON.stringify(values, null, 2));
+            console.log(values);
         }
     })
 
@@ -108,6 +86,10 @@ const AddProduct = () => {
     const handleImageUpload = (e) => {
         const files = e.target.files
         formik.setFieldValue('productimages', [...formik.values.productimages, ...files])
+    }
+
+    const handleEditorChange = (editorValue) => {
+        formik.setFieldValue("frequentlyaskedquestions", editorValue);
     }
 
 
@@ -218,7 +200,7 @@ const AddProduct = () => {
 
                                                                             <div style={{ margin: '10px 0', width: '100%' }} >
                                                                                 { /* // File Upload for Product Images multiple image */}
-                                                                                <Grid  spacing={2}>
+                                                                                <Grid spacing={2}>
                                                                                     {formik.values.productimages.map((image, index) => (
                                                                                         <img key={index} src={URL.createObjectURL(image)} alt={`image-${index}`} width="100" height="100" />
                                                                                     ))}
@@ -319,6 +301,25 @@ const AddProduct = () => {
                                                                                     <div style={{ color: "red", marginBottom: '15px', fontSize: '12px' }}>{formik.errors.productdimensions}</div>
                                                                                 )}
 
+                                                                                <div style={{ margin: '10px 0' }} >
+                                                                                <TextField
+                                                                                    label="Product Weight"
+                                                                                    size='medium'
+                                                                                    fullWidth
+                                                                                    variant="outlined"
+                                                                                    id="productweight"
+                                                                                    name="productweight"
+                                                                                    type="number"
+                                                                                    onChange={formik.handleChange}
+                                                                                    onBlur={formik.handleBlur}
+                                                                                    value={formik.values.productweight}
+                                                                                />
+                                                                                {formik.touched.productweight && formik.errors.productweight && (
+                                                                                    <div style={{ color: "red", marginBottom: '15px', fontSize: '12px' }}>{formik.errors.productweight}</div>
+                                                                                )}
+
+                                                                            </div>
+
                                                                             </div>
 
 
@@ -359,24 +360,7 @@ const AddProduct = () => {
                                                                             alignItems: 'center',
                                                                             margin: 2,
                                                                         }}>
-                                                                            <div style={{ margin: '10px 0' }} >
-                                                                                <TextField
-                                                                                    label="Product Weight"
-                                                                                    size='medium'
-                                                                                    fullWidth
-                                                                                    variant="outlined"
-                                                                                    id="productweight"
-                                                                                    name="productweight"
-                                                                                    type="number"
-                                                                                    onChange={formik.handleChange}
-                                                                                    onBlur={formik.handleBlur}
-                                                                                    value={formik.values.productweight}
-                                                                                />
-                                                                                {formik.touched.productweight && formik.errors.productweight && (
-                                                                                    <div style={{ color: "red", marginBottom: '15px', fontSize: '12px' }}>{formik.errors.productweight}</div>
-                                                                                )}
-
-                                                                            </div>
+                                                                            
 
                                                                             <div style={{ margin: '10px 0' }} >
                                                                                 {/* { Material and construction textarea optional} */}
@@ -427,6 +411,22 @@ const AddProduct = () => {
 
                                                                             </div>
 
+                                                                            <div style={{ margin: '10px 0' }} >
+                                                                                {/* { Frequently Asked Questions (FAQs) WYSIWYG editor optional} */}
+                                                                                <ReactQuill
+                                                                                    id="frequentlyaskedquestions"
+                                                                                    name="frequentlyaskedquestions"
+                                                                                    value={formik.values.frequentlyaskedquestions}
+                                                                                    onChange={(editer) => handleEditorChange(editer)}
+                                                                                    onBlur={formik.handleBlur}
+                                                                                    placeholder='Frequently Asked Questions'
+                                                                                />
+                                                                                {formik.touched.frequentlyaskedquestions && formik.errors.frequentlyaskedquestions && (
+                                                                                    <div style={{ color: "red", marginBottom: '15px', fontSize: '12px' }}>{formik.errors.frequentlyaskedquestions}</div>
+                                                                                )}
+                                                                                
+                                                                            </div>
+
 
 
                                                                             <div style={{ margin: '10px 0' }} >
@@ -453,7 +453,7 @@ const AddProduct = () => {
                                                                             </div>
 
 
-                                                                            {/* <button type="submit" className="btn btn-primary" style={{ width: '100%', backgroundColor: '#575656' }}>Add Product</button> */}
+                                                                            <button type="submit" className="btn btn-primary" style={{ width: '100%', backgroundColor: '#575656' }}>Add Product</button>
                                                                         </Grid>
                                                                     </Grid>
                                                                 </Card>
@@ -464,34 +464,6 @@ const AddProduct = () => {
                                             </CardContent>
                                         </Card>
                                     </Stack>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <Card sx={{ minWidth: 50 + '%', height: 100 + '%', bgcolor: '#575656' }}>
-                                        <CardContent sx={{
-                                            margin: 0 + 'px',
-                                        }}>
-                                            <div className='addproductmaincard' sx={{
-                                                margin: 50 + 'px',
-                                                display: 'flex',
-                                                flexDirection: 'column',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-
-                                            }}>
-                                                <div style={{ margin: '10px 0' }} >
-                                                    {/* { Frequently Asked Questions (FAQs) WYSIWYG editor optional} */}
-                                                    <Editor placeholder='Frequently Asked Questions (FAQs)' sx={{
-                                                        width: 100 + '%',
-                                                        height: 75 + 'px',
-                                                        margin: 0 + 'px',
-                                                        padding: 0 + 'px',
-                                                    }} />
-                                                </div>
-
-                                                <button type="submit" className="btn btn-primary">Add Product</button>
-                                            </div>
-                                        </CardContent>
-                                    </Card>
                                 </Grid>
                             </Grid>
                         </form>
