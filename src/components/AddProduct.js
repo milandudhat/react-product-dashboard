@@ -39,7 +39,7 @@ const AddProduct = () => {
             materialandconstruction: '',
             productfeatures: '',
             relatedproducts: '',
-            frequentlyaskedquestions: '',
+            faq: '',
             warrantyinformation: '',
             returnpolicy: '',
         },
@@ -67,8 +67,6 @@ const AddProduct = () => {
                 .required('Product features is required'),
             relatedproducts: Yup.string()
                 .max(20, 'Must be 20 characters or less'),
-            frequentlyaskedquestions: Yup.string()
-                .max(20, 'Must be 20 characters or less'),
             warrantyinformation: Yup.string()
                 .max(20, 'Must be 20 characters or less'),
             returnpolicy: Yup.string()
@@ -89,7 +87,7 @@ const AddProduct = () => {
     }
 
     const handleEditorChange = (editorValue) => {
-        formik.setFieldValue("frequentlyaskedquestions", editorValue);
+        formik.setFieldValue("faq", editorValue);
     }
 
 
@@ -414,17 +412,13 @@ const AddProduct = () => {
                                                                             <div style={{ margin: '10px 0' }} >
                                                                                 {/* { Frequently Asked Questions (FAQs) WYSIWYG editor optional} */}
                                                                                 <ReactQuill
-                                                                                    id="frequentlyaskedquestions"
-                                                                                    name="frequentlyaskedquestions"
-                                                                                    value={formik.values.frequentlyaskedquestions}
-                                                                                    onChange={(editer) => handleEditorChange(editer)}
-                                                                                    onBlur={formik.handleBlur}
+                                                                                    id="faq"
+                                                                                    name="faq"
+                                                                                    value={formik.values.faq}
+                                                                                    onChange={(value) => handleEditorChange(value)}
                                                                                     placeholder='Frequently Asked Questions'
                                                                                 />
-                                                                                {formik.touched.frequentlyaskedquestions && formik.errors.frequentlyaskedquestions && (
-                                                                                    <div style={{ color: "red", marginBottom: '15px', fontSize: '12px' }}>{formik.errors.frequentlyaskedquestions}</div>
-                                                                                )}
-                                                                                
+
                                                                             </div>
 
 
