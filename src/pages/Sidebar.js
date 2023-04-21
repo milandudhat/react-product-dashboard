@@ -107,26 +107,6 @@ export default function Sidebar() {
                             <ListItemText primary='Home' sx={{ opacity: open ? 1 : 0 }} />
                         </ListItemButton>
                     </ListItem>
-                    <ListItem disablePadding sx={{ display: 'block' }} onClick={()=>navigate('/dashboard')}>
-                        <ListItemButton
-                            sx={{
-                                minHeight: 48,
-                                justifyContent: open ? 'initial' : 'center',
-                                px: 2.5,
-                            }}
-                        >
-                            <ListItemIcon
-                                sx={{
-                                    minWidth: 0,
-                                    mr: open ? 3 : 'auto',
-                                    justifyContent: 'center',
-                                }}
-                            >
-                                <AutoGraphIcon />
-                            </ListItemIcon>
-                            <ListItemText primary='Dashboard' sx={{ opacity: open ? 1 : 0 }} />
-                        </ListItemButton>
-                    </ListItem>
                     <ListItem disablePadding sx={{ display: 'block' }} onClick={()=>navigate('/addproduct')}>
                         <ListItemButton
                             sx={{
