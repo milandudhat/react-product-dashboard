@@ -36,3 +36,51 @@
     transform: rotate(360deg);
   }
 }
+
+
+.alert-for-required{
+  color: red;
+  font-size: 15px;
+  margin-top: 5px;
+}
+
+
+
+TextField{
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.input-field{
+  width: 100%;
+  /* margin-top: 10px;
+  margin-bottom: 10px; */
+  padding: 20px;
+  margin: 200px;
+  
+}
+
+
+.btn:hover{
+  background-color: #ffffff;
+  color: #fff;
+}
+
+
+.btn{
+  color: #e6e6e6;
+  border: 1px solid #000;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  size: 50px;
+  background-color: #575656;
+  font-size: large;
+}
+
+
+

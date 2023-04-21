@@ -1,0 +1,53 @@
+.cardcolor{
+    color: #575656;
+
+}
+
+
+.bgcolor{
+    min-height: 100vh;
+    background-color: #ECEFF1;
+    background: linear=gradient(158deg , rgb(224,224,224) 0% , rrgb(233,237,254) 100%);
+}
+
+
+.homepageCard{
+    /* background-color: #FFFFFF; */
+    border-radius: 10px;
+    /* padding: 20px; */
+    margin: auto;
+    /* box-shadow: 0 0 10px 0 rgba(0,0,0,0.2); */
+    transition: 0.3s;
+    /* width: 100%;
+    height: 100%; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    color: #ECEFF1;
+    font-size: 45px;
+}
+
+.addproductmaincard{
+    border-radius: 10px;
+    margin: auto;
+    transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    color: #ECEFF1;
+    font-size: 30px;
+}
+
+
+.btn{
+    background-color: #575656;
+    font-size: large;
+}
