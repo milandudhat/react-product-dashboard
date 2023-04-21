@@ -15,7 +15,6 @@ import ListItemText from '@mui/material/ListItemText';
 import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '../AppStore';
 import HomeIcon from '@mui/icons-material/Home';
-import AutoGraphIcon from '@mui/icons-material/AutoGraph';
 import CategoryIcon from '@mui/icons-material/Category';
 
 const drawerWidth = 240;

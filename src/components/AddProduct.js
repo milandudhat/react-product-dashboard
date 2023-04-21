@@ -11,20 +11,30 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import TextField from '@mui/material/TextField';
 import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
-import Select from '@mui/material/Select';
-import Checkbox from '@mui/material/Checkbox';
-import FormGroup from '@mui/material/FormGroup';
-// import Textarea from '@mui/joy';
-
+import MUIEditor, { MUIEditorState } from "react-mui-draft-wysiwyg";
 import '../Dash.css'
 import { Textarea } from '@mui/joy';
 
+
+const Editor = () => {
+    const [editorState, setEditorState] = React.useState(
+        MUIEditorState.createEmpty(),
+    )
+    const onChange = newState => {
+        setEditorState(newState)
+    }
+    return <MUIEditor sx={{
+        minwidth: '100%',
+        minheight: '100%',
+        border: '1px solid #ccc',
+        borderRadius: '4px',
+        padding: '5px',
+        fontSize: '16px',
+    }} placeholder="Frequently Asked Questions (FAQs)" editorState={editorState} onChange={onChange} />
+}
 
 
 const AddProduct = () => {
@@ -54,7 +64,7 @@ const AddProduct = () => {
                 .required('Product description is required'),
             productimages:
                 /* image validation either image or multiple images */
-                Yup.mixed() , 
+                Yup.mixed(),
             price: Yup.number()
                 .required('Price is required'),
             availability: Yup.boolean()
@@ -85,7 +95,13 @@ const AddProduct = () => {
             alert(JSON.stringify(values, null, 2));
         }
     })
+
+
+
+
+
     return (
+
         <>
             <div className='bgcolor'>
                 <Navbar />
@@ -94,7 +110,7 @@ const AddProduct = () => {
                     <Sidebar />
                     <Box component="main" sx={{ flexGrow: 1, p: 2 }}>
                         <Grid item xs={12}>
-                            <Card sx={{ minWidth: 30 + '%', height: 75, bgcolor: '#575656' }}>
+                            <Card sx={{ minWidth: 50 + '%', height: 75, bgcolor: '#575656' }}>
                                 <CardContent sx={{
                                     margin: 1 + 'px',
                                 }}>
@@ -287,6 +303,44 @@ const AddProduct = () => {
 
                                                                             </div>
 
+                                                                            
+                                                                        </Grid>
+                                                                    </Grid>
+                                                                </Card>
+                                                            </>
+                                                        </Box>
+                                                    </Container>
+                                                </div>
+                                            </CardContent>
+                                        </Card>
+                                        <Card sx={{ minWidth: 50 + '%', minheight: 100 + '%', bgcolor: '#575656' }}>
+                                            <CardContent sx={{
+                                                margin: 5 + 'px',
+                                            }}>
+                                                <div sx={{
+                                                    margin: 50 + 'px',
+                                                    display: 'flex',
+                                                    flexDirection: 'column',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+
+                                                }}>
+                                                    <Container maxWidth="sm" sx={{
+                                                        marginTop: 0
+                                                    }}>
+                                                        <Box>
+                                                            <>
+                                                                <Card>
+                                                                    <Grid container spacing={2}>
+                                                                        <Grid item xs={12} sx={{
+                                                                            // display: 'flex',
+                                                                            // flexDirection: 'column',
+                                                                            padding: "10px 10px",
+                                                                            // gap: 2,
+                                                                            justifyContent: 'center',
+                                                                            alignItems: 'center',
+                                                                            margin: 2,
+                                                                        }}>
                                                                             <div style={{ margin: '10px 0' }} >
                                                                                 <TextField
                                                                                     label="Product Weight"
@@ -306,47 +360,6 @@ const AddProduct = () => {
 
                                                                             </div>
 
-                                                                        </Grid>
-                                                                    </Grid>
-                                                                </Card>
-                                                            </>
-                                                        </Box>
-                                                    </Container>
-                                                </div>
-                                            </CardContent>
-                                        </Card>
-                                        <Card sx={{ minWidth: 49 + '%', minheight: 100 + '%', bgcolor: '#575656' }}>
-                                            <CardContent sx={{
-                                                margin: 10 + 'px',
-                                            }}>
-                                                <div sx={{
-                                                    margin: 100 + 'px',
-                                                    display: 'flex',
-                                                    flexDirection: 'column',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'center',
-
-                                                }}>
-                                                    <Container maxWidth="sm" sx={{
-                                                        marginTop: 0
-                                                    }}>
-                                                        <Box>
-                                                            <>
-                                                                <Card>
-                                                                    <Grid container spacing={2}>
-                                                                        <Grid item xs={12}>
-                                                                        </Grid>
-                                                                        <Grid item xs={12} sx={{
-                                                                            // display: 'flex',
-                                                                            // flexDirection: 'column',
-                                                                            padding: "10px 10px",
-                                                                            // gap: 2,
-                                                                            justifyContent: 'center',
-                                                                            alignItems: 'center',
-                                                                            margin: 2,
-                                                                        }}>
-
-
                                                                             <div style={{ margin: '10px 0' }} >
                                                                                 {/* { Material and construction textarea optional} */}
                                                                                 <Textarea label="Material and Construction" id="materialandconstruction" name="materialandconstruction" placeholder='Material and Construction' onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.materialandconstruction} sx={{
@@ -360,6 +373,7 @@ const AddProduct = () => {
 
 
                                                                             </div>
+
 
                                                                             <div style={{ margin: '10px 0' }} >
                                                                                 {/* { Product features textarea (required)} */}
@@ -395,25 +409,7 @@ const AddProduct = () => {
 
                                                                             </div>
 
-                                                                            <div style={{ margin: '10px 0' }} >
-                                                                                {/* { Frequently Asked Questions (FAQs) WYSIWYG editor optional} */}
-                                                                                <TextField
-                                                                                    label="Frequently Asked Questions"
-                                                                                    size='medium'
-                                                                                    fullWidth
-                                                                                    variant="outlined"
-                                                                                    id="frequentlyaskedquestions"
-                                                                                    name="frequentlyaskedquestions"
-                                                                                    type="text"
-                                                                                    onChange={formik.handleChange}
-                                                                                    onBlur={formik.handleBlur}
-                                                                                    value={formik.values.frequentlyaskedquestions}
-                                                                                />
 
-                                                                                {formik.touched.frequentlyaskedquestions && formik.errors.frequentlyaskedquestions && (
-                                                                                    <div style={{ color: "red", marginBottom: '15px', fontSize: '12px' }}>{formik.errors.frequentlyaskedquestions}</div>
-                                                                                )}
-                                                                            </div>
 
                                                                             <div style={{ margin: '10px 0' }} >
                                                                                 {/* { Warranty information textarea optional} */}
@@ -439,7 +435,7 @@ const AddProduct = () => {
                                                                             </div>
 
 
-                                                                            <button type="submit" className="btn btn-primary" style={{ width: '100%', backgroundColor: '#575656' }}>Add Product</button>
+                                                                            {/* <button type="submit" className="btn btn-primary" style={{ width: '100%', backgroundColor: '#575656' }}>Add Product</button> */}
                                                                         </Grid>
                                                                     </Grid>
                                                                 </Card>
@@ -451,7 +447,34 @@ const AddProduct = () => {
                                         </Card>
                                     </Stack>
                                 </Grid>
+                                <Grid item xs={12}>
+                                    <Card sx={{ minWidth: 50 + '%', height: 100 + '%', bgcolor: '#575656' }}>
+                                        <CardContent sx={{
+                                            margin: 1 + 'px',
+                                        }}>
+                                            <div className='addproductmaincard' sx={{
+                                                margin: 50 + 'px',
+                                                display: 'flex',
+                                                flexDirection: 'column',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
 
+                                            }}>
+                                                <div style={{ margin: '10px 0' }} >
+                                                    {/* { Frequently Asked Questions (FAQs) WYSIWYG editor optional} */}
+                                                    <Editor placeholder='Frequently Asked Questions (FAQs)' sx={{
+                                                        width: 100 + '%',
+                                                        height: 75 + 'px',
+                                                        margin: 0 + 'px',
+                                                        padding: 0 + 'px',
+                                                    }} />
+                                                </div>
+
+                                                <button type="submit" className="btn btn-primary">Add Product</button>
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
                             </Grid>
                         </form>
                     </Box>
