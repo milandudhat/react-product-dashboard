@@ -14,35 +14,46 @@ import Container from '@mui/material/Container';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import MUIEditor, { MUIEditorState } from "react-mui-draft-wysiwyg";
 import '../Dash.css'
+
+
+import MUIEditor, { MUIEditorState } from "react-mui-draft-wysiwyg";
 import { Textarea } from '@mui/joy';
 
 
-const Editor = () => {
-    const [editorState, setEditorState] = React.useState(
-        MUIEditorState.createEmpty(),
-    )
-    const onChange = newState => {
-        setEditorState(newState)
-    }
-    return <MUIEditor sx={{
-        minwidth: '100%',
-        minheight: '100%',
-        border: '1px solid #ccc',
-        borderRadius: '4px',
-        padding: '5px',
-        fontSize: '16px',
-    }} placeholder="Frequently Asked Questions (FAQs)" editorState={editorState} onChange={onChange} />
-}
-
 
 const AddProduct = () => {
+    const Editor = () => {
+        const [editorState, setEditorState] = React.useState(
+            MUIEditorState.createEmpty({
+                editorState: {
+                    decorator: {
+                        strategy: () => { },
+                        component: () => { },
+                    },
+                },
+
+            }),
+        )
+        const onChange = newState => {
+            setEditorState(newState)
+        }
+        return <MUIEditor sx={{
+            minwidth: '100%',
+            minheight: '100%',
+            border: '1px solid #ccc',
+            borderRadius: '4px',
+            padding: '5px',
+            fontSize: '16px',
+        }} placeholder="Frequently Asked Questions (FAQs)" editorState={editorState} onChange={onChange} />
+    }
+
+
     const formik = useFormik({
         initialValues: {
             productname: '',
             productdescription: '',
-            productimages: '',
+            productimages: [],
             price: '',
             availability: '',
             shippinginformation: '',
@@ -62,9 +73,6 @@ const AddProduct = () => {
             productdescription: Yup.string()
                 .max(20, 'Must be 20 characters or less')
                 .required('Product description is required'),
-            productimages:
-                /* image validation either image or multiple images */
-                Yup.mixed(),
             price: Yup.number()
                 .required('Price is required'),
             availability: Yup.boolean()
@@ -95,6 +103,12 @@ const AddProduct = () => {
             alert(JSON.stringify(values, null, 2));
         }
     })
+
+
+    const handleImageUpload = (e) => {
+        const files = e.target.files
+        formik.setFieldValue('productimages', [...formik.values.productimages, ...files])
+    }
 
 
 
@@ -204,15 +218,19 @@ const AddProduct = () => {
 
                                                                             <div style={{ margin: '10px 0', width: '100%' }} >
                                                                                 { /* // File Upload for Product Images multiple image */}
+                                                                                <Grid  spacing={2}>
+                                                                                    {formik.values.productimages.map((image, index) => (
+                                                                                        <img key={index} src={URL.createObjectURL(image)} alt={`image-${index}`} width="100" height="100" />
+                                                                                    ))}
+                                                                                </Grid>
                                                                                 <input
                                                                                     accept="image/*"
                                                                                     id="productimages"
                                                                                     name="productimages"
                                                                                     type="file"
                                                                                     multiple
-                                                                                    onChange={formik.handleChange}
+                                                                                    onChange={(e) => handleImageUpload(e)}
                                                                                     onBlur={formik.handleBlur}
-                                                                                    value={formik.values.productimages}
                                                                                     sx={{
                                                                                         width: 100 + '%',
                                                                                         height: 75 + 'px',
@@ -303,7 +321,7 @@ const AddProduct = () => {
 
                                                                             </div>
 
-                                                                            
+
                                                                         </Grid>
                                                                     </Grid>
                                                                 </Card>
@@ -450,7 +468,7 @@ const AddProduct = () => {
                                 <Grid item xs={12}>
                                     <Card sx={{ minWidth: 50 + '%', height: 100 + '%', bgcolor: '#575656' }}>
                                         <CardContent sx={{
-                                            margin: 1 + 'px',
+                                            margin: 0 + 'px',
                                         }}>
                                             <div className='addproductmaincard' sx={{
                                                 margin: 50 + 'px',
